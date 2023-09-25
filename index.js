@@ -4,10 +4,10 @@ function savetoLocalstorage() {
 
     for (i = 0; i < taskList.children.length; i++) {
         let taskText = taskList.children[i].textContent.replace('Delete', '').trim()
-        let isDone  = taskList.children[i].classList.contains('done')
+        let isDone = taskList.children[i].classList.contains('done')
 
         tasks.push({
-            text:taskText,
+            text: taskText,
             done: isDone
         })
     }
@@ -17,7 +17,7 @@ function savetoLocalstorage() {
 
 function loadTasksfromLocalStorage() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || []
-    tasks.forEach(task => addTask(task.text,task.done))
+    tasks.forEach(task => addTask(task.text, task.done))
 }
 
 // This will always keep displaying all the task items stored in the local storage
@@ -38,8 +38,8 @@ function addTask(taskText, isDone = false) {
     //  Creating an task item and assigning it with task
     const li = document.createElement('li');
     li.textContent = text;
-    
-    if (isDone){
+
+    if (isDone) {
         li.classList.add('done')
     }
 
@@ -48,16 +48,15 @@ function addTask(taskText, isDone = false) {
     deleteBtn.textContent = 'Delete'
     deleteBtn.onclick = function () {
         taskList.removeChild(li)
-        
         // saving all the remaining list elements to local storage 
         savetoLocalstorage();
     }
 
     li.appendChild(deleteBtn)
     taskList.appendChild(li)
-    
+
     // saving all the task list elements to localstorage when new element is added 
-    li.addEventListener('click',function(){
+    li.addEventListener('click', function () {
         li.classList.toggle('done');
         savetoLocalstorage();
     })
@@ -69,12 +68,38 @@ function addTask(taskText, isDone = false) {
 
 
 
-function clearAllTasks(){
-    if (!confirm('Are you sure you want to clear all tasks?' )){
+function clearAllTasks() {
+    if (!confirm('Are you sure you want to clear all tasks?')) {
         return;
     }
     const taskList = document.getElementById('taskList')
 
-    taskList.innerHTML =''
+    taskList.innerHTML = ''
     localStorage.removeItem('tasks')
+}
+
+function filterTask(criteria) {
+    const tasks = document.querySelectorAll('#taskList li');
+
+    tasks.forEach(task => {
+        switch (criteria) {
+            case 'all':
+                task.style.display = ''
+                break;
+            case 'active':
+                if (task.classList.contains('done')) {
+                    task.style.display = 'None'
+                } else {
+                    task.style.display = ''
+                }
+                break;
+            case 'complete':
+                if (task.classList.contains('done')) {
+                    task.style.display = ''
+                } else {
+                    task.style.display = 'None'
+                }
+                break;
+        }
+    })
 }
