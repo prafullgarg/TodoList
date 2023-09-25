@@ -1,0 +1,32 @@
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+
+}
+
+#taskInput {
+    width: 70%;
+    padding: 1rem;
+}
+
+#taskList li {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100% ;
+    margin: 10px -2.5rem;
+    background-color: #f4f4f4;
+    padding: 5px;
+}
+
+button {
+    border-radius: 5px;
+    height:2rem;
+}
+
+#taskList li.done {
+    text-decoration: line-through;
+    color: gray;
+}
+
