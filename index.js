@@ -1,21 +1,24 @@
+// creating saveToLocalStorage Fuction To Equip todo list with local storage facility.
 function savetoLocalstorage() {
     const taskList = document.getElementById('taskList')
     const tasks = []
-
+    //iterating over taskList element to store its childrens content to local storage along with there task status 
     for (i = 0; i < taskList.children.length; i++) {
-        let taskText = taskList.children[i].textContent.replace('Delete', '').trim()
-        let isDone = taskList.children[i].classList.contains('done')
+        let taskText = taskList.children[i].textContent.replace('Delete', '').trim() // repleace() function will remove first Delete from statment with ""  
+        let isDone = taskList.children[i].classList.contains('done') // contains will return boolean ex: true, if class name = 'done'
 
         tasks.push({
             text: taskText,
             done: isDone
         })
     }
-
+    // setItem will create a tasks object in local storage with stringyfied tasks array value 
     localStorage.setItem('tasks', JSON.stringify(tasks))
+    // Json.stringify(tasks) will convert Json object to its string representation 
 }
 
 function loadTasksfromLocalStorage() {
+    //This function  will render the tasks from local storage and disply them 
     const tasks = JSON.parse(localStorage.getItem('tasks')) || []
     tasks.forEach(task => addTask(task.text, task.done))
 }
@@ -79,8 +82,9 @@ function clearAllTasks() {
 }
 
 function filterTask(criteria) {
+    // Applying an switch block to distinguesh functionality bases on the filter applied 
     const tasks = document.querySelectorAll('#taskList li');
-
+    // If the task aplies to the condition its style will beset to '' , means default wich will let it visible else set to 'none' means it will be invisibale 
     tasks.forEach(task => {
         switch (criteria) {
             case 'all':
